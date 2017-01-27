@@ -1,0 +1,19 @@
+server:
+  port: 8447
+logging:
+  file: /java/C2S_LOGS/vss/vss.log
+info:
+  component: Value Set Service API
+ribbon:
+  ReadTimeout: 50000
+security:
+  oauth2:
+    client:
+      client-id: vss
+---
+spring.profiles: standalone-ssl
+spring:
+  profiles:
+    include: ssl-default
+server:
+  context-path: /vss
