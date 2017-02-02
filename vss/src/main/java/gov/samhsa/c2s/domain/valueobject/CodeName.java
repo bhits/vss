@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class CodeName {
 
-    @Column
+    @Column(unique = true)
     @NotNull
     private String code;
 
