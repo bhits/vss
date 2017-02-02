@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Audited
 @Data
-public class ConceptCode {
+public class CodedConcept {
 
     @Id
     @GeneratedValue

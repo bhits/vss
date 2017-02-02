@@ -25,8 +25,8 @@ public class CodeSystem {
     private String displayName;
 
     @Embedded
-    private RevisionRecord revisionRecord;
+    private CodeName codeName;
 
     @Embedded
-    private CodeName codeName;
+    private RevisionRecord revisionRecord;
 }
