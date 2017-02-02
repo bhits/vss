@@ -7,6 +7,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Embeddable
@@ -20,5 +21,9 @@ public class RevisionRecord {
 
     @Column
     @LastModifiedDate
-    private LocalDateTime modifiedDate;
+    private LocalDateTime modifiedTime;
+
+    @Column
+    @NotNull
+    private String userName;
 }

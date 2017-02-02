@@ -10,6 +10,12 @@ security:
   oauth2:
     client:
       client-id: vss
+spring:
+  datasource:
+    # configure url, username and password per environment
+    url: jdbc:mysql://localhost:3306/vss?autoReconnect=true
+    username: root
+    password: admin
 ---
 spring.profiles: standalone-ssl
 spring:
