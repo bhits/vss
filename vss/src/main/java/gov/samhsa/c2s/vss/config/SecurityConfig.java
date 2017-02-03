@@ -1,4 +1,4 @@
-package gov.samhsa.c2s.config;
+package gov.samhsa.c2s.vss.config;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;

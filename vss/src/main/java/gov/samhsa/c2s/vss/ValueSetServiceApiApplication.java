@@ -1,4 +1,4 @@
-package gov.samhsa.c2s;
+package gov.samhsa.c2s.vss;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

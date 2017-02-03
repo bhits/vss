@@ -1,4 +1,4 @@
-package gov.samhsa.c2s.domain.valueobject;
+package gov.samhsa.c2s.vss.domain.valueobject;
 
 import lombok.Data;
 import org.hibernate.envers.Audited;

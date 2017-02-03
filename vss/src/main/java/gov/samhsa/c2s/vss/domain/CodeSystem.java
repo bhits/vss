@@ -1,7 +1,7 @@
-package gov.samhsa.c2s.domain;
+package gov.samhsa.c2s.vss.domain;
 
-import gov.samhsa.c2s.domain.valueobject.CodeName;
-import gov.samhsa.c2s.domain.valueobject.RevisionRecord;
+import gov.samhsa.c2s.vss.domain.valueobject.CodeName;
+import gov.samhsa.c2s.vss.domain.valueobject.RevisionRecord;
 import lombok.Data;
 import org.hibernate.envers.Audited;
 
@@ -20,7 +20,7 @@ public class CodeSystem {
 
     @NotNull
     @Column(name = "code_system_oid")
-    private String codeSystemOId;
+    private String codeSystemOid;
 
     private String displayName;
 
