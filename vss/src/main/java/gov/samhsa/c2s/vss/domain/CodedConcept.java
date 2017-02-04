@@ -8,6 +8,8 @@ import org.hibernate.envers.Audited;
 import javax.persistence.*;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"code",
+        "code_system_version_id"}))
 @Audited
 @Data
 public class CodedConcept {

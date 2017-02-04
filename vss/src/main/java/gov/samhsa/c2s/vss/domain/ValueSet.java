@@ -4,12 +4,11 @@ import gov.samhsa.c2s.vss.domain.valueobject.CodeName;
 import gov.samhsa.c2s.vss.domain.valueobject.RevisionRecord;
 import lombok.Data;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"code"}))
 @Audited
 @Data
 public class ValueSet {
@@ -21,10 +20,6 @@ public class ValueSet {
 
     @ManyToOne
     private ValueSetCategory valueSetCategory;
-
-    @OneToMany
-    @NotAudited
-    private List<CodedConcept> codedConcepts;
 
     @Embedded
     private CodeName codeName;

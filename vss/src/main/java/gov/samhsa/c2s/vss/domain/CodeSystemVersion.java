@@ -17,7 +17,9 @@ public class CodeSystemVersion {
     private Long id;
 
     @NotNull
-    private String name;
+    private String versionName;
+
+    private Long versionOrder;
 
     private String description;
 
