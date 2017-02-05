@@ -6,6 +6,7 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class CodeSystemVersion {
     private String versionName;
 
     @NotNull
-    private Long versionOrder;
+    @Min(1)
+    private int versionOrder;
 
     private String description;
 

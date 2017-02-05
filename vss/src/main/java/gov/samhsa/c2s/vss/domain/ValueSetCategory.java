@@ -21,7 +21,7 @@ public class ValueSetCategory {
 
     private boolean isFederal;
 
-    private Long displayOrder;
+    private int displayOrder;
 
     @OneToMany(mappedBy = "valueSetCategory")
     @NotAudited
