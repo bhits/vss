@@ -32,12 +32,12 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
             valueSetCategoryRepository.findAll()
                     .forEach(
                             valueSetCategoryDto -> {
-                                ValueSetCategoryFieldsDto sensitivityPolicyDtoItem = new ValueSetCategoryFieldsDto();
-                                sensitivityPolicyDtoItem.setCode(valueSetCategoryDto.getCodeName().getCode());
-                                sensitivityPolicyDtoItem.setDisplayName(valueSetCategoryDto.getCodeName().getName());
-                                sensitivityPolicyDtoItem.setDescription(valueSetCategoryDto.getDescription());
-                                sensitivityPolicyDtoItem.setFederal(valueSetCategoryDto.isFederal());
-                                sensitivityPolicyDtoItem.setDisplayOrder(valueSetCategoryDto.getDisplayOrder());
+                                ValueSetCategoryFieldsDto sensitivityPolicyDtoItem =
+                                        new ValueSetCategoryFieldsDto(valueSetCategoryDto.getCodeName().getCode(),
+                                                valueSetCategoryDto.getCodeName().getName(),
+                                                valueSetCategoryDto.getDescription(),
+                                                valueSetCategoryDto.isFederal(),
+                                                valueSetCategoryDto.getDisplayOrder());
                                 sensitivityPolicyDto.add(sensitivityPolicyDtoItem);
                             }
                     );
