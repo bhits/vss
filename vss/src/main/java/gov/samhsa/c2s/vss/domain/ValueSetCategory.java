@@ -17,6 +17,7 @@ public class ValueSetCategory {
     @GeneratedValue
     private Long id;
 
+    @Column(length = 5000)
     private String description;
 
     private boolean isFederal;

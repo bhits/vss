@@ -13,21 +13,21 @@ public class CodedConceptValueSet {
     CodedConceptValueSetId id;
 
     @ManyToOne
-    @JoinColumn(name = "fk_coded_concept", insertable = false, updatable = false)
+    @JoinColumn(name = "fk_coded_concept_id", insertable = false, updatable = false)
     private CodedConcept codedConcept;
 
     @ManyToOne
-    @JoinColumn(name = "fk_value_set", insertable = false, updatable = false)
+    @JoinColumn(name = "fk_value_set_id", insertable = false, updatable = false)
     private ValueSet valueSet;
 
     @Embeddable
     @Data
     public static class CodedConceptValueSetId implements Serializable {
 
-        @Column(name = "fk_coded_concept")
+        @Column(name = "fk_coded_concept_id")
         protected Long codedConceptId;
 
-        @Column(name = "fk_value_set")
+        @Column(name = "fk_value_set_id")
         protected Long valueSetId;
     }
 }

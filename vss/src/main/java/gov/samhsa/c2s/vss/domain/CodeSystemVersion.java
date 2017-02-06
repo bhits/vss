@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(indexes = @Index(columnList = "versionOrder", name = "version_order_idx", unique = true))
+@Table(indexes = @Index(columnList = "versionOrder", name = "version_order_idx"))
 @Audited
 @Data
 public class CodeSystemVersion {
