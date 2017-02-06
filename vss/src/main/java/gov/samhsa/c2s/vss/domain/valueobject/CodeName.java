@@ -1,7 +1,9 @@
 package gov.samhsa.c2s.vss.domain.valueobject;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.Column;
@@ -12,6 +14,8 @@ import javax.validation.constraints.NotNull;
 @Audited
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CodeName {
 
     @Column(unique = true)

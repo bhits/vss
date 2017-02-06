@@ -33,6 +33,7 @@ public class SecurityConfig {
                         .antMatchers(HttpMethod.GET, "/management/**").access(hasScope("vss.management"))
                         .antMatchers(HttpMethod.POST, "/management/**").access(hasScope("vss.management"))
                         .antMatchers(HttpMethod.POST, "/search/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/search/**").permitAll()
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().denyAll();
             }

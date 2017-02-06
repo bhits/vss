@@ -2,6 +2,7 @@ package gov.samhsa.c2s.vss.web;
 
 import gov.samhsa.c2s.vss.service.ValueSetLookupService;
 import gov.samhsa.c2s.vss.service.dto.CodedConceptAndCodeSystemOidDto;
+import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryFieldsDto;
 import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryMapDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,12 @@ public class ValueSetLookupRestController {
     private ValueSetLookupService valueSetLookupService;
 
     @RequestMapping(value = "/search/valueSetCategories", method = RequestMethod.POST)
-    public List<ValueSetCategoryMapDto> searchValueSetCategories(@Valid @RequestBody List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos){
+    public List<ValueSetCategoryMapDto> searchValueSetCategories(@Valid @RequestBody List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos) {
         return valueSetLookupService.lookupValueSetCategories(codedConceptAndCodeSystemOidDtos);
+    }
+
+    @RequestMapping(value = "/search/sensitivityPolicy", method = RequestMethod.GET)
+    public List<ValueSetCategoryFieldsDto> searchSensitivityPolicy() {
+        return valueSetLookupService.lookupSensitivityPolicies();
     }
 }

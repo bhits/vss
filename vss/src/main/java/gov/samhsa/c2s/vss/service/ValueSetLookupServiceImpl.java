@@ -1,15 +1,51 @@
 package gov.samhsa.c2s.vss.service;
 
+import gov.samhsa.c2s.common.log.Logger;
+import gov.samhsa.c2s.common.log.LoggerFactory;
+import gov.samhsa.c2s.vss.domain.ValueSetCategoryRepository;
 import gov.samhsa.c2s.vss.service.dto.CodedConceptAndCodeSystemOidDto;
+import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryFieldsDto;
 import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryMapDto;
+import gov.samhsa.c2s.vss.service.exception.SensitivityPolicySearchFailedException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ValueSetLookupServiceImpl implements ValueSetLookupService {
+    private Logger logger = LoggerFactory.getLogger(this);
+
+    @Autowired
+    private ValueSetCategoryRepository valueSetCategoryRepository;
+
     @Override
     public List<ValueSetCategoryMapDto> lookupValueSetCategories(List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos) {
         return null;
+    }
+
+    @Override
+    public List<ValueSetCategoryFieldsDto> lookupSensitivityPolicies() {
+        List<ValueSetCategoryFieldsDto> sensitivityPolicyDto = new ArrayList<>();
+        try {
+            valueSetCategoryRepository.findAll()
+                    .forEach(
+                            valueSetCategoryDto -> {
+                                ValueSetCategoryFieldsDto sensitivityPolicyDtoItem = new ValueSetCategoryFieldsDto();
+                                sensitivityPolicyDtoItem.setCode(valueSetCategoryDto.getCodeName().getCode());
+                                sensitivityPolicyDtoItem.setDisplayName(valueSetCategoryDto.getCodeName().getName());
+                                sensitivityPolicyDtoItem.setDescription(valueSetCategoryDto.getDescription());
+                                sensitivityPolicyDtoItem.setFederal(valueSetCategoryDto.isFederal());
+                                sensitivityPolicyDtoItem.setDisplayOrder(valueSetCategoryDto.getDisplayOrder());
+                                sensitivityPolicyDto.add(sensitivityPolicyDtoItem);
+                            }
+                    );
+        } catch (Exception e) {
+            logger.error(() -> "SensitivityPolicy search failed: " + e.getMessage());
+            logger.debug(e::getMessage, e);
+            throw new SensitivityPolicySearchFailedException();
+        }
+        return sensitivityPolicyDto;
     }
 }
