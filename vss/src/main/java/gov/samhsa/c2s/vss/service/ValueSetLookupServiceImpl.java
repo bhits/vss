@@ -82,11 +82,13 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
                     .findAllByCodeSystemCodeSystemOidOrderByVersionOrderDesc(codeSystemOid.trim());
 
             CodeSystemVersion codeSystemVersion = codeSystemVersions.get(0);
+            logger.debug("The latest version of Code System version: " + codeSystemVersion);
 
             // 2.Get the concept code for the given code and the latest code system version
             CodedConcept codedConcept = codedConceptRepository
                     .findByCodeSystemVersionIdAndCodeNameCode(codeSystemVersion.getId(),
                             codeConceptCode.trim());
+            logger.debug("The concept code name: " + codedConcept.getCodeName().getName());
 
             // 3.Get the value sets associated to the concept code
             valueSetRepository
