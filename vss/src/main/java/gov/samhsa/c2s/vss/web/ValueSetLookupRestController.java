@@ -19,13 +19,13 @@ public class ValueSetLookupRestController {
     @Autowired
     private ValueSetLookupService valueSetLookupService;
 
-    @RequestMapping(value = "/search/valueSetCategories", method = RequestMethod.POST)
-    public List<ValueSetCategoryLookupDto> searchValueSetCategories(@Valid @RequestBody List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos) {
-        return valueSetLookupService.lookupValueSetCategories(codedConceptAndCodeSystemOidDtos);
-    }
-
     @RequestMapping(value = "/search/sensitivityPolicies", method = RequestMethod.GET)
     public List<ValueSetCategoryFieldsDto> searchSensitivityPolicy() {
         return valueSetLookupService.lookupSensitivityPolicies();
+    }
+
+    @RequestMapping(value = "/search/valueSetCategories", method = RequestMethod.POST)
+    public List<ValueSetCategoryLookupDto> searchValueSetCategories(@Valid @RequestBody List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos) {
+        return valueSetLookupService.lookupValueSetCategories(codedConceptAndCodeSystemOidDtos);
     }
 }

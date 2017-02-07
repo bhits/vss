@@ -22,17 +22,24 @@ import static java.util.stream.Collectors.toList;
 public class ValueSetLookupServiceImpl implements ValueSetLookupService {
     private Logger logger = LoggerFactory.getLogger(this);
 
-    @Autowired
     private ValueSetCategoryRepository valueSetCategoryRepository;
 
-    @Autowired
     private ValueSetRepository valueSetRepository;
 
-    @Autowired
     private CodedConceptRepository codedConceptRepository;
 
-    @Autowired
     private CodeSystemVersionRepository codeSystemVersionRepository;
+
+    @Autowired
+    public ValueSetLookupServiceImpl(ValueSetCategoryRepository valueSetCategoryRepository,
+                                     ValueSetRepository valueSetRepository,
+                                     CodedConceptRepository codedConceptRepository,
+                                     CodeSystemVersionRepository codeSystemVersionRepository) {
+        this.valueSetCategoryRepository = valueSetCategoryRepository;
+        this.valueSetRepository = valueSetRepository;
+        this.codedConceptRepository = codedConceptRepository;
+        this.codeSystemVersionRepository = codeSystemVersionRepository;
+    }
 
     @Override
     public List<ValueSetCategoryFieldsDto> lookupSensitivityPolicies() {
@@ -73,7 +80,7 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
             // 1.Get latest version of Code System version for the given code system oid
             List<CodeSystemVersion> codeSystemVersions = codeSystemVersionRepository
                     .findAllByCodeSystemCodeSystemOidOrderByVersionOrderDesc(codeSystemOid.trim());
-            // Get the latest version
+
             CodeSystemVersion codeSystemVersion = codeSystemVersions.get(0);
 
             // 2.Get the concept code for the given code and the latest code system version
