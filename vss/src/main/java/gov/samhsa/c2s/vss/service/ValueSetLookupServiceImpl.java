@@ -5,7 +5,7 @@ import gov.samhsa.c2s.common.log.LoggerFactory;
 import gov.samhsa.c2s.vss.domain.ValueSetCategoryRepository;
 import gov.samhsa.c2s.vss.service.dto.CodedConceptAndCodeSystemOidDto;
 import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryFieldsDto;
-import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryMapDto;
+import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryLookupDto;
 import gov.samhsa.c2s.vss.service.exception.SensitivityPolicySearchFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
     private ValueSetCategoryRepository valueSetCategoryRepository;
 
     @Override
-    public List<ValueSetCategoryMapDto> lookupValueSetCategories(List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos) {
+    public List<ValueSetCategoryLookupDto> lookupValueSetCategories(List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos) {
         return null;
     }
 

@@ -5,10 +5,6 @@ import lombok.Data;
 import java.util.Set;
 
 @Data
-public class ValueSetCategoryMapDto {
-    private String codeConceptCode;
-
-    private String codeSystemOid;
-
+public class ValueSetCategoryLookupDto {
     private Set<String> valueSetCategoryCodes;
 }
