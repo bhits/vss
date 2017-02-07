@@ -4,8 +4,8 @@ import gov.samhsa.c2s.common.log.Logger;
 import gov.samhsa.c2s.common.log.LoggerFactory;
 import gov.samhsa.c2s.vss.domain.*;
 import gov.samhsa.c2s.vss.service.dto.CodedConceptAndCodeSystemOidDto;
-import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryFieldsDto;
-import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryLookupDto;
+import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryDto;
+import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryMapDto;
 import gov.samhsa.c2s.vss.service.exception.SensitivityPolicySearchFailedException;
 import gov.samhsa.c2s.vss.service.exception.ValueSetCategoriesSearchFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,18 +42,18 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
     }
 
     @Override
-    public List<ValueSetCategoryFieldsDto> lookupSensitivityPolicies() {
-        List<ValueSetCategoryFieldsDto> sensitivityPolicyDto = new ArrayList<>();
+    public List<ValueSetCategoryDto> lookupSensitivityPolicies() {
+        List<ValueSetCategoryDto> sensitivityPolicyDto = new ArrayList<>();
         try {
             valueSetCategoryRepository.findAll()
                     .forEach(
-                            valueSetCategoryDto -> {
-                                ValueSetCategoryFieldsDto sensitivityPolicyDtoItem =
-                                        new ValueSetCategoryFieldsDto(valueSetCategoryDto.getCodeName().getCode(),
-                                                valueSetCategoryDto.getCodeName().getName(),
-                                                valueSetCategoryDto.getDescription(),
-                                                valueSetCategoryDto.isFederal(),
-                                                valueSetCategoryDto.getDisplayOrder());
+                            valueSetCategory -> {
+                                ValueSetCategoryDto sensitivityPolicyDtoItem =
+                                        new ValueSetCategoryDto(valueSetCategory.getCodeName().getCode(),
+                                                valueSetCategory.getCodeName().getName(),
+                                                valueSetCategory.getDescription(),
+                                                valueSetCategory.isFederal(),
+                                                valueSetCategory.getDisplayOrder());
                                 sensitivityPolicyDto.add(sensitivityPolicyDtoItem);
                             }
                     );
@@ -66,31 +66,32 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
     }
 
     @Override
-    public List<ValueSetCategoryLookupDto> lookupValueSetCategories(List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos) {
+    public List<ValueSetCategoryMapDto> lookupValueSetCategories(List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos) {
         return codedConceptAndCodeSystemOidDtos.stream()
-                .map(dto -> getValueSetCategoryLookupDto(dto.getCodeConceptCode(), dto.getCodeSystemOid()))
+                .map(dto -> getValueSetCategoryMapDto(dto.getCodeConceptCode(), dto.getCodeSystemOid()))
                 .collect(toList());
     }
 
-    private ValueSetCategoryLookupDto getValueSetCategoryLookupDto(String codeConceptCode, String codeSystemOid) {
+    private ValueSetCategoryMapDto getValueSetCategoryMapDto(String codeConceptCode, String codeSystemOid) {
 
         Set<String> valueSetCategoryCodes = new HashSet<>();
 
         try {
             // 1.Get latest version of Code System version for the given code system oid
-            List<CodeSystemVersion> codeSystemVersions = codeSystemVersionRepository
-                    .findAllByCodeSystemCodeSystemOidOrderByVersionOrderDesc(codeSystemOid.trim());
+            CodeSystemVersion codeSystemVersion = codeSystemVersionRepository
+                    .findTopByCodeSystemCodeSystemOidOrderByVersionOrderDesc(codeSystemOid.trim())
+                    .orElseGet(CodeSystemVersion::new);
 
-            CodeSystemVersion codeSystemVersion = codeSystemVersions.get(0);
-            logger.debug("The latest version of Code System version: " + codeSystemVersion);
+            logger.debug("The latest version of Code System version: " + codeSystemVersion.getVersionName());
 
-            // 2.Get the concept code for the given code and the latest code system version
+            // 2.Get the coded concept for the given code and the latest code system version
             CodedConcept codedConcept = codedConceptRepository
                     .findByCodeSystemVersionIdAndCodeNameCode(codeSystemVersion.getId(),
-                            codeConceptCode.trim());
-            logger.debug("The concept code name: " + codedConcept.getCodeName().getName());
+                            codeConceptCode.trim())
+                    .orElseGet(CodedConcept::new);
+            logger.debug("The coded concept name: " + codedConcept.getCodeName().getName());
 
-            // 3.Get the value sets associated to the concept code
+            // 3.Get the value sets associated to the coded concept
             valueSetRepository
                     .findAllByCodedConceptsId(codedConcept.getId())
                     .forEach(
@@ -101,6 +102,6 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
             logger.debug(e::getMessage, e);
             throw new ValueSetCategoriesSearchFailedException();
         }
-        return new ValueSetCategoryLookupDto(valueSetCategoryCodes);
+        return new ValueSetCategoryMapDto(codeConceptCode, codeSystemOid, valueSetCategoryCodes);
     }
 }

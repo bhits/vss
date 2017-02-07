@@ -9,6 +9,8 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ValueSetCategoryLookupDto {
+public class ValueSetCategoryMapDto {
+    private String codeConceptCode;
+    private String codeSystemOid;
     private Set<String> valueSetCategoryCodes;
 }

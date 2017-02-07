@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ValueSetCategoryFieldsDto {
+public class ValueSetCategoryDto {
 
     /**
      * The code.
