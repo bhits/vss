@@ -24,7 +24,7 @@ public class ValueSetLookupRestController {
         return valueSetLookupService.lookupValueSetCategories(codedConceptAndCodeSystemOidDtos);
     }
 
-    @RequestMapping(value = "/search/sensitivityPolicy", method = RequestMethod.GET)
+    @RequestMapping(value = "/search/sensitivityPolicies", method = RequestMethod.GET)
     public List<ValueSetCategoryFieldsDto> searchSensitivityPolicy() {
         return valueSetLookupService.lookupSensitivityPolicies();
     }

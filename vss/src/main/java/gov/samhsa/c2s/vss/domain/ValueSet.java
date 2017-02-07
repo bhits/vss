@@ -23,9 +23,9 @@ public class ValueSet {
     @ManyToOne
     private ValueSetCategory valueSetCategory;
 
-    @OneToMany(mappedBy = "valueSet", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "valueSets")
     @NotAudited
-    private List<CodedConceptValueSet> codedConcepts;
+    private List<CodedConcept> codedConcepts;
 
     @Embedded
     private CodeName codeName;

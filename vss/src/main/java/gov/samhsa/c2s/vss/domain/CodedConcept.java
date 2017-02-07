@@ -25,9 +25,10 @@ public class CodedConcept {
     @ManyToOne
     private CodeSystemVersion codeSystemVersion;
 
-    @OneToMany(mappedBy = "codedConcept", fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(name = "coded_concept_value_set", joinColumns = @JoinColumn(name = "coded_concept_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "value_set_id", referencedColumnName = "id"))
     @NotAudited
-    private List<CodedConceptValueSet> valueSets;
+    private List<ValueSet> valueSets;
 
     @Embedded
     private CodeName codeName;
