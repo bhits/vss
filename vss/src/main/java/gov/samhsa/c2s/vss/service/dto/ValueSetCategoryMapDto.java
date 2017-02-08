@@ -10,7 +10,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ValueSetCategoryMapDto {
-    private String codeConceptCode;
+    private String codedConceptCode;
     private String codeSystemOid;
     private Set<String> valueSetCategoryCodes;
 }

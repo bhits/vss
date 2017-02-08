@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Data
 public class CodedConceptAndCodeSystemOidDto {
     @NotEmpty
-    private String codeConceptCode;
+    private String codedConceptCode;
     @NotEmpty
     private String codeSystemOid;
 }

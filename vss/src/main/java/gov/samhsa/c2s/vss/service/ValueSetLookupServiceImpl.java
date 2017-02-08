@@ -66,7 +66,7 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
         List<ValueSetCategoryMapDto> valueSetCategoryMapDtos;
         try {
             valueSetCategoryMapDtos = codedConceptAndCodeSystemOidDtos.stream()
-                    .map(dto -> getValueSetCategoryMapDto(dto.getCodeConceptCode().trim(), dto.getCodeSystemOid().trim()))
+                    .map(dto -> getValueSetCategoryMapDto(dto.getCodedConceptCode().trim(), dto.getCodeSystemOid().trim()))
                     .collect(toList());
         } catch (Exception e) {
             logger.error(() -> "ValueSetCategoryMaps search failed: " + e.getMessage());
@@ -76,17 +76,17 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
         return valueSetCategoryMapDtos;
     }
 
-    private ValueSetCategoryMapDto getValueSetCategoryMapDto(String codeConceptCode, String codeSystemOid) {
+    private ValueSetCategoryMapDto getValueSetCategoryMapDto(String codedConceptCode, String codeSystemOid) {
         // 1.Get latest version of Code System version for the given code system oid
         Set<String> valueSetCategoryCodes = codeSystemVersionRepository
                 .findTopByCodeSystemCodeSystemOidOrderByVersionOrderDesc(codeSystemOid).map(Stream::of).orElse(Stream.empty())
                 .peek(codeSystemVersion -> logger.debug("The latest version of Code System version: " + codeSystemVersion.getVersionName()))
                 // 2.Get the coded concept for the given code and the latest code system version
-                .flatMap(codeSystemVersion -> codedConceptRepository.findByCodeSystemVersionIdAndCodeNameCode(codeSystemVersion.getId(), codeConceptCode).map(Stream::of).orElse(Stream.empty()))
+                .flatMap(codeSystemVersion -> codedConceptRepository.findByCodeSystemVersionIdAndCodeNameCode(codeSystemVersion.getId(), codedConceptCode).map(Stream::of).orElse(Stream.empty()))
                 .peek(codedConcept -> logger.debug("The coded concept name: " + codedConcept.getCodeName().getName()))
                 // 3.Get the value sets associated to the coded concept
                 .flatMap(codedConcept -> valueSetRepository.findAllByCodedConceptsId(codedConcept.getId()).stream()).map(ValueSet::getValueSetCategory).map(ValueSetCategory::getCodeName).map(CodeName::getCode)
                 .collect(toSet());
-        return new ValueSetCategoryMapDto(codeConceptCode, codeSystemOid, valueSetCategoryCodes);
+        return new ValueSetCategoryMapDto(codedConceptCode, codeSystemOid, valueSetCategoryCodes);
     }
 }

@@ -16,8 +16,12 @@ import java.util.List;
 @RestController
 public class ValueSetLookupRestController {
 
-    @Autowired
     private ValueSetLookupService valueSetLookupService;
+
+    @Autowired
+    public ValueSetLookupRestController(ValueSetLookupService valueSetLookupService) {
+        this.valueSetLookupService = valueSetLookupService;
+    }
 
     @RequestMapping(value = "/valueSetCategories", method = RequestMethod.GET)
     public List<ValueSetCategoryDto> searchValueSetCategories() {
