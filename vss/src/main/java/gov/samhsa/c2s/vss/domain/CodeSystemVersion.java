@@ -1,6 +1,5 @@
 package gov.samhsa.c2s.vss.domain;
 
-import gov.samhsa.c2s.vss.domain.valueobject.RevisionRecord;
 import lombok.Data;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -35,7 +34,4 @@ public class CodeSystemVersion {
     @OneToMany(mappedBy = "codeSystemVersion")
     @NotAudited
     private List<CodedConcept> codedConcepts;
-
-    @Embedded
-    private RevisionRecord revisionRecord;
 }
