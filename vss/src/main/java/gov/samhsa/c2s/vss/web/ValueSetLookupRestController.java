@@ -20,12 +20,12 @@ public class ValueSetLookupRestController {
     private ValueSetLookupService valueSetLookupService;
 
     @RequestMapping(value = "/valueSetCategories", method = RequestMethod.GET)
-    public List<ValueSetCategoryDto> searchSensitivityPolicy() {
-        return valueSetLookupService.lookupSensitivityPolicies();
+    public List<ValueSetCategoryDto> searchValueSetCategories() {
+        return valueSetLookupService.lookupValueSetCategories();
     }
 
     @RequestMapping(value = "/search/valueSetCategoryMaps", method = RequestMethod.POST)
-    public List<ValueSetCategoryMapDto> searchValueSetCategories(@Valid @RequestBody List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos) {
-        return valueSetLookupService.lookupValueSetCategories(codedConceptAndCodeSystemOidDtos);
+    public List<ValueSetCategoryMapDto> searchValueSetCategoryMaps(@Valid @RequestBody List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos) {
+        return valueSetLookupService.lookupValueSetCategoryMaps(codedConceptAndCodeSystemOidDtos);
     }
 }

@@ -7,12 +7,13 @@ import gov.samhsa.c2s.vss.domain.valueobject.CodeName;
 import gov.samhsa.c2s.vss.service.dto.CodedConceptAndCodeSystemOidDto;
 import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryDto;
 import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryMapDto;
-import gov.samhsa.c2s.vss.service.exception.SensitivityPolicySearchFailedException;
 import gov.samhsa.c2s.vss.service.exception.ValueSetCategoriesSearchFailedException;
+import gov.samhsa.c2s.vss.service.exception.ValueSetCategoryMapsSearchFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
@@ -42,40 +43,35 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
     }
 
     @Override
-    public List<ValueSetCategoryDto> lookupSensitivityPolicies() {
-        List<ValueSetCategoryDto> sensitivityPolicyDto = new ArrayList<>();
+    public List<ValueSetCategoryDto> lookupValueSetCategories() {
+        List<ValueSetCategoryDto> valueSetCategoryDtos;
         try {
-            valueSetCategoryRepository.findAll()
-                    .forEach(
-                            valueSetCategory -> {
-                                ValueSetCategoryDto sensitivityPolicyDtoItem =
-                                        new ValueSetCategoryDto(valueSetCategory.getCodeName().getCode(),
-                                                valueSetCategory.getCodeName().getName(),
-                                                valueSetCategory.getDescription(),
-                                                valueSetCategory.isFederal(),
-                                                valueSetCategory.getDisplayOrder());
-                                sensitivityPolicyDto.add(sensitivityPolicyDtoItem);
-                            }
-                    );
+            valueSetCategoryDtos = valueSetCategoryRepository.findAll().stream()
+                    .map(valueSetCategory -> new ValueSetCategoryDto(valueSetCategory.getCodeName().getCode(),
+                            valueSetCategory.getCodeName().getName(),
+                            valueSetCategory.getDescription(),
+                            valueSetCategory.isFederal(),
+                            valueSetCategory.getDisplayOrder()))
+                    .collect(toList());
         } catch (Exception e) {
-            logger.error(() -> "SensitivityPolicy search failed: " + e.getMessage());
+            logger.error(() -> "ValueSetCategories search failed: " + e.getMessage());
             logger.debug(e::getMessage, e);
-            throw new SensitivityPolicySearchFailedException();
+            throw new ValueSetCategoriesSearchFailedException("Unable to lookup ValueSetCategories.");
         }
-        return sensitivityPolicyDto;
+        return valueSetCategoryDtos;
     }
 
     @Override
-    public List<ValueSetCategoryMapDto> lookupValueSetCategories(List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos) {
+    public List<ValueSetCategoryMapDto> lookupValueSetCategoryMaps(List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos) {
         List<ValueSetCategoryMapDto> valueSetCategoryMapDtos;
         try {
             valueSetCategoryMapDtos = codedConceptAndCodeSystemOidDtos.stream()
                     .map(dto -> getValueSetCategoryMapDto(dto.getCodeConceptCode().trim(), dto.getCodeSystemOid().trim()))
                     .collect(toList());
         } catch (Exception e) {
-            logger.error(() -> "ValueSetCategories search failed: " + e.getMessage());
+            logger.error(() -> "ValueSetCategoryMaps search failed: " + e.getMessage());
             logger.debug(e::getMessage, e);
-            throw new ValueSetCategoriesSearchFailedException();
+            throw new ValueSetCategoryMapsSearchFailedException("Unable to lookup ValueSetCategoryMaps.");
         }
         return valueSetCategoryMapDtos;
     }

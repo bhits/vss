@@ -7,7 +7,7 @@ import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryMapDto;
 import java.util.List;
 
 public interface ValueSetLookupService {
-    List<ValueSetCategoryDto> lookupSensitivityPolicies();
+    List<ValueSetCategoryDto> lookupValueSetCategories();
 
-    List<ValueSetCategoryMapDto> lookupValueSetCategories(List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos);
+    List<ValueSetCategoryMapDto> lookupValueSetCategoryMaps(List<CodedConceptAndCodeSystemOidDto> codedConceptAndCodeSystemOidDtos);
 }
