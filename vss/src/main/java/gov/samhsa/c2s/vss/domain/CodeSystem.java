@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"code_system_oid"}))
 @Audited
 @Data
 public class CodeSystem {
@@ -20,7 +19,7 @@ public class CodeSystem {
     private Long id;
 
     @NotNull
-    @Column(name = "code_system_oid")
+    @Column(unique = true)
     private String codeSystemOid;
 
     private String displayName;
