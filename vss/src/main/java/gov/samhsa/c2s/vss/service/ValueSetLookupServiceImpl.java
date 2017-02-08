@@ -73,30 +73,29 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
     }
 
     private ValueSetCategoryMapDto getValueSetCategoryMapDto(String codeConceptCode, String codeSystemOid) {
-
         Set<String> valueSetCategoryCodes = new HashSet<>();
 
         try {
             // 1.Get latest version of Code System version for the given code system oid
-            CodeSystemVersion codeSystemVersion = codeSystemVersionRepository
+            codeSystemVersionRepository
                     .findTopByCodeSystemCodeSystemOidOrderByVersionOrderDesc(codeSystemOid.trim())
-                    .orElseGet(CodeSystemVersion::new);
+                    .ifPresent(codeSystemVersion -> {
+                        logger.debug("The latest version of Code System version: " + codeSystemVersion.getVersionName());
+                        // 2.Get the coded concept for the given code and the latest code system version
+                        codedConceptRepository
+                                .findByCodeSystemVersionIdAndCodeNameCode(codeSystemVersion.getId(),
+                                        codeConceptCode.trim())
+                                .ifPresent(codedConcept -> {
+                                    logger.debug("The coded concept name: " + codedConcept.getCodeName().getName());
 
-            logger.debug("The latest version of Code System version: " + codeSystemVersion.getVersionName());
-
-            // 2.Get the coded concept for the given code and the latest code system version
-            CodedConcept codedConcept = codedConceptRepository
-                    .findByCodeSystemVersionIdAndCodeNameCode(codeSystemVersion.getId(),
-                            codeConceptCode.trim())
-                    .orElseGet(CodedConcept::new);
-            logger.debug("The coded concept name: " + codedConcept.getCodeName().getName());
-
-            // 3.Get the value sets associated to the coded concept
-            valueSetRepository
-                    .findAllByCodedConceptsId(codedConcept.getId())
-                    .forEach(
-                            valueSet -> valueSetCategoryCodes.add(valueSet.getValueSetCategory().getCodeName().getCode())
-                    );
+                                    // 3.Get the value sets associated to the coded concept
+                                    valueSetRepository
+                                            .findAllByCodedConceptsId(codedConcept.getId())
+                                            .forEach(
+                                                    valueSet -> valueSetCategoryCodes.add(valueSet.getValueSetCategory().getCodeName().getCode())
+                                            );
+                                });
+                    });
         } catch (Exception e) {
             logger.error(() -> "ValueSetCategories search failed: " + e.getMessage());
             logger.debug(e::getMessage, e);
