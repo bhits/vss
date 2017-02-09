@@ -43,7 +43,7 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
     }
 
     @Override
-    public List<ValueSetCategoryDto> lookupValueSetCategories() {
+    public List<ValueSetCategoryDto> getValueSetCategories() {
         List<ValueSetCategoryDto> valueSetCategoryDtos;
         try {
             valueSetCategoryDtos = valueSetCategoryRepository.findAll().stream()

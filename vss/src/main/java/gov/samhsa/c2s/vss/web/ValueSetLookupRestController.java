@@ -24,8 +24,8 @@ public class ValueSetLookupRestController {
     }
 
     @RequestMapping(value = "/valueSetCategories", method = RequestMethod.GET)
-    public List<ValueSetCategoryDto> searchValueSetCategories() {
-        return valueSetLookupService.lookupValueSetCategories();
+    public List<ValueSetCategoryDto> getValueSetCategories() {
+        return valueSetLookupService.getValueSetCategories();
     }
 
     @RequestMapping(value = "/search/valueSetCategoryMaps", method = RequestMethod.POST)
