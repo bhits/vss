@@ -1,9 +1,10 @@
 package gov.samhsa.c2s.vss.service;
 
-import gov.samhsa.c2s.vss.domain.ValueSetCategory;
-import gov.samhsa.c2s.vss.domain.ValueSetCategoryRepository;
+import gov.samhsa.c2s.vss.domain.*;
 import gov.samhsa.c2s.vss.domain.valueobject.CodeName;
+import gov.samhsa.c2s.vss.service.dto.CodedConceptAndCodeSystemOidDto;
 import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryDto;
+import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryMapDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -12,6 +13,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
@@ -22,6 +26,15 @@ public class ValueSetLookupServiceImplTest {
 
     @Mock
     private ValueSetCategoryRepository valueSetCategoryRepository;
+
+    @Mock
+    private ValueSetRepository valueSetRepository;
+
+    @Mock
+    private CodedConceptRepository codedConceptRepository;
+
+    @Mock
+    private CodeSystemVersionRepository codeSystemVersionRepository;
 
     @InjectMocks
     private ValueSetLookupServiceImpl sut;
@@ -85,5 +98,68 @@ public class ValueSetLookupServiceImplTest {
                 .getDescription());
         assertEquals(vscMock2DisplayOrder, valueSetCategoryDtos.get(1).getDisplayOrder());
         verify(valueSetCategoryRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void testLookupValueSetCategoryMaps() throws Exception {
+        // Arrange
+        final String mockCodeSystemOid = "mockCodeSystemOid";
+        final String mockCodedConceptCode = "mockCodedConceptCode";
+        final Long mockCSVId = 1L;
+        final Long mockCCId = 1L;
+        final Long mockVSId = 1L;
+        final String mockVSCCode = "mockVSCCode";
+        final String mockVSCName = "mockVSCName";
+        final String mockCCCode = "mockCCCode";
+        final String mockCCName = "mockCCName";
+        //Request
+        final CodedConceptAndCodeSystemOidDto mockRequestDto = mock(CodedConceptAndCodeSystemOidDto.class);
+        when(mockRequestDto.getCodedConceptCode()).thenReturn(mockCodedConceptCode);
+        when(mockRequestDto.getCodeSystemOid()).thenReturn(mockCodeSystemOid);
+        List<CodedConceptAndCodeSystemOidDto> mockRequestCodeAndCSOidDtos = new ArrayList<>();
+        mockRequestCodeAndCSOidDtos.add(mockRequestDto);
+        //Response
+        final CodeSystemVersion mockCSV = mock(CodeSystemVersion.class);
+        when(mockCSV.getId()).thenReturn(mockCSVId);
+        when(codeSystemVersionRepository.findTopByCodeSystemCodeSystemOidOrderByVersionOrderDesc(mockCodeSystemOid)).thenReturn(Optional.of(mockCSV));
+        final CodeName mockCCCodeName = mock(CodeName.class);
+        when(mockCCCodeName.getCode()).thenReturn(mockCCCode);
+        when(mockCCCodeName.getName()).thenReturn(mockCCName);
+        final CodedConcept mockCC = mock(CodedConcept.class);
+        when(mockCC.getId()).thenReturn(mockCCId);
+        when(mockCC.getCodeName()).thenReturn(mockCCCodeName);
+        when(codedConceptRepository.findByCodeSystemVersionIdAndCodeNameCode(mockCSV.getId(), mockCodedConceptCode)).thenReturn(Optional.of(mockCC));
+        final CodeName mockVSCCodeName = mock(CodeName.class);
+        when(mockVSCCodeName.getCode()).thenReturn(mockVSCCode);
+        when(mockVSCCodeName.getName()).thenReturn(mockVSCName);
+        final ValueSetCategory mockVSC = mock(ValueSetCategory.class);
+        when(mockVSC.getCodeName()).thenReturn(mockVSCCodeName);
+        final ValueSet mockVS = mock(ValueSet.class);
+        when(mockVS.getId()).thenReturn(mockVSId);
+        when(mockVS.getValueSetCategory()).thenReturn(mockVSC);
+        List<ValueSet> mockValueSets = new ArrayList<>();
+        mockValueSets.add(mockVS);
+        when(valueSetRepository.findAllByCodedConceptsId(mockCC.getId())).thenReturn(mockValueSets);
+        Set<String> valueSetCategoryCodes = mockValueSets.stream()
+                .map(ValueSet::getValueSetCategory)
+                .map(ValueSetCategory::getCodeName)
+                .map(CodeName::getCode)
+                .collect(Collectors.toSet());
+        final ValueSetCategoryMapDto mockVscMapDto = new ValueSetCategoryMapDto(mockCodedConceptCode, mockCodeSystemOid, valueSetCategoryCodes);
+        List<ValueSetCategoryMapDto> mockResponseVSCMapDtos = new ArrayList<>();
+        mockResponseVSCMapDtos.add(mockVscMapDto);
+
+        // Act
+        List<ValueSetCategoryMapDto> valueSetCategoryMapDtos = sut.lookupValueSetCategoryMaps(mockRequestCodeAndCSOidDtos);
+
+        // Assert
+        assertEquals(mockResponseVSCMapDtos, valueSetCategoryMapDtos);
+        assertEquals(1, valueSetCategoryMapDtos.size());
+        assertEquals(mockCodedConceptCode, valueSetCategoryMapDtos.get(0).getCodedConceptCode());
+        assertEquals(mockCodeSystemOid, valueSetCategoryMapDtos.get(0).getCodeSystemOid());
+        assertEquals(mockVSCCode, valueSetCategoryMapDtos.get(0).getValueSetCategoryCodes().iterator().next());
+        verify(codeSystemVersionRepository, times(1)).findTopByCodeSystemCodeSystemOidOrderByVersionOrderDesc(mockCodeSystemOid);
+        verify(codedConceptRepository, times(1)).findByCodeSystemVersionIdAndCodeNameCode(mockCSV.getId(), mockCodedConceptCode);
+        verify(valueSetRepository, times(1)).findAllByCodedConceptsId(mockCC.getId());
     }
 }
