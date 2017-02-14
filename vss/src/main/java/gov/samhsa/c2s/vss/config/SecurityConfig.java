@@ -1,4 +1,4 @@
-package gov.samhsa.c2s.config;
+package gov.samhsa.c2s.vss.config;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +32,8 @@ public class SecurityConfig {
                 http.authorizeRequests()
                         .antMatchers(HttpMethod.GET, "/management/**").access(hasScope("vss.management"))
                         .antMatchers(HttpMethod.POST, "/management/**").access(hasScope("vss.management"))
+                        .antMatchers(HttpMethod.POST, "/search/**").permitAll()
+                        .antMatchers(HttpMethod.GET, "/valueSetCategories/**").permitAll()
                         .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().denyAll();
             }

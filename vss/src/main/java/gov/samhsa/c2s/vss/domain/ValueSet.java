@@ -1,7 +1,6 @@
-package gov.samhsa.c2s.domain;
+package gov.samhsa.c2s.vss.domain;
 
-import gov.samhsa.c2s.domain.valueobject.CodeName;
-import gov.samhsa.c2s.domain.valueobject.RevisionRecord;
+import gov.samhsa.c2s.vss.domain.valueobject.CodeName;
 import lombok.Data;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
@@ -10,6 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"code"}))
 @Audited
 @Data
 public class ValueSet {
@@ -22,13 +22,10 @@ public class ValueSet {
     @ManyToOne
     private ValueSetCategory valueSetCategory;
 
-    @OneToMany
+    @ManyToMany(mappedBy = "valueSets")
     @NotAudited
     private List<CodedConcept> codedConcepts;
 
     @Embedded
     private CodeName codeName;
-
-    @Embedded
-    private RevisionRecord revisionRecord;
 }

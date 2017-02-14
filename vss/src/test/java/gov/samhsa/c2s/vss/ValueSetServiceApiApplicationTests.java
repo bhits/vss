@@ -1,4 +1,4 @@
-package gov.samhsa.c2s;
+package gov.samhsa.c2s.vss;
 
 import org.junit.Ignore;
 import org.junit.Test;
