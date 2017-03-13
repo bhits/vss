@@ -54,18 +54,23 @@ public class ValueSetLookupServiceImplTest {
         final String vscMock2Description = "vscMock2Description";
         final boolean vscMockIsFedera2 = true;
         final int vscMock2DisplayOrder = 2;
+        final String system = "http://hl7.org/fhir/v3/ActCode";
         ValueSetCategory vscMock = mock(ValueSetCategory.class);
         ValueSetCategory vscMock2 = mock(ValueSetCategory.class);
+        ValueSetCategorySystem systemMock = mock(ValueSetCategorySystem.class);
+        when(systemMock.getSystem()).thenReturn(system);
 
         when(vscMock.getCodeName()).thenReturn(vscMockCodeName);
         when(vscMock.getDescription()).thenReturn(vscMockDescription);
         when(vscMock.isFederal()).thenReturn(vscMockIsFederal);
         when(vscMock.getDisplayOrder()).thenReturn(vscMockDisplayOrder);
+        when(vscMock.getValueSetCategorySystem()).thenReturn(systemMock);
 
         when(vscMock2.getCodeName()).thenReturn(vscMock2CodeName);
         when(vscMock2.getDescription()).thenReturn(vscMock2Description);
         when(vscMock2.isFederal()).thenReturn(vscMockIsFedera2);
         when(vscMock2.getDisplayOrder()).thenReturn(vscMock2DisplayOrder);
+        when(vscMock2.getValueSetCategorySystem()).thenReturn(systemMock);
 
         List<ValueSetCategory> valueSetCategoryListMock = new ArrayList<>();
         valueSetCategoryListMock.add(vscMock);
@@ -77,7 +82,8 @@ public class ValueSetLookupServiceImplTest {
                         valueSetCategory.getCodeName().getName(),
                         valueSetCategory.getDescription(),
                         valueSetCategory.isFederal(),
-                        valueSetCategory.getDisplayOrder()))
+                        valueSetCategory.getDisplayOrder(),
+                        valueSetCategory.getValueSetCategorySystem().getSystem()))
                 .collect(toList());
 
         // Act

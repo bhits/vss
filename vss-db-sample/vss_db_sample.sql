@@ -1,10 +1,15 @@
 -- VSS Sample Data
 -- ------------------------------------------------------
+USE vss;
+
+--
+-- Insert data for table `value_set_category_system`
+--
+INSERT INTO `value_set_category_system` VALUES (1, 'http://hl7.org/fhir/v3/ActCode');
+
 --
 -- Insert data for table `code_system`
 --
-USE vss;
-
 INSERT INTO `code_system` VALUES
   (1, 'SNOMED CT ', 'SNOMED-Clinical Terms', '2.16.840.1.113883.6.96',
    'Systematized Nomenclature of Medicine-Clinical Terms'),
@@ -37,22 +42,22 @@ INSERT INTO `code_system_version` VALUES
 INSERT INTO `value_set_category` VALUES
   (1, 'ETH', 'Drug use information',
    'Drug abuse or substance abuse is the use of mood-altering substances that interfere with or have a negative effect on a person’s life. These include negative effects on a person’s physical, psychological, social, emotional, occupational, and educational well-being. Drug abuse is characterized by dysfunction and negative consequences. Most drugs of abuse are mood altering (they change a person’s mood or feeling), and fall in three categories: stimulants, depressants, and hallucinogens.',
-   1, TRUE),
+   1, TRUE, 1),
   (3, 'HIV', 'HIV/AIDS information',
    'Human immunodeficiency virus (HIV) is a virus that weakens a person’s immune system by destroying important cells that fight disease and infection. HIV infection typically begins with flu-like symptoms followed by a long symptom-free period. HIV can be controlled with antiretroviral therapy. Untreated, HIV can advance to acquire immunodeficiency syndrome (AIDS), the most severe phase of HIV infection. People with AIDS have such badly damaged immune systems that they get an increasing number of severe illnesses, which can lead to death.',
-   4, FALSE),
+   4, FALSE, 1),
   (4, 'PSY', 'Mental health information',
    'Mental illness or a psychiatric disorder is a condition that affects a person’s thinking, feeling, or mood, and may affect his or her ability to relate to others and function well on a daily basis. Mental illnesses are medical conditions that often cause a diminished ability to cope with the ordinary demands of life. Like other medical disorders, mental illness ranges from mild to severe. There is a wide variety of treatments for mental illnesses.',
-   3, FALSE),
+   3, FALSE, 1),
   (6, 'SEX', 'Sexuality and reproductive health information',
    'Good sexual and reproductive health is a state of complete physical, mental, and social well-being in all matters relating to the reproductive system, at all stages of life. It implies that people are able to have a satisfying and safe sex life, the capacity to reproduce, and the freedom to decide if, when, and how often to do so. Similarly, sexual health is a state of physical, emotional, and social well-being in relation to sexuality. It is not simply the absence of disease, dysfunction, or infirmity.',
-   7, FALSE),
+   7, FALSE, 1),
   (9, 'ALC', 'Alcohol use and Alcoholism Information',
    'Alcohol abuse is the use of alcohol in such a way that it interferes with or has a negative effect on a person’s life. These include negative effects on a person’s physical, psychological, social, emotional, occupational, and educational well-being. Alcoholism or alcohol addiction is a primary, chronic, and disabling disorder that involves compulsion, loss of control, and continued use despite negative consequences. Genetic, psychosocial, and environmental factors influence its development and outcome.',
-   2, TRUE),
+   2, TRUE, 1),
   (10, 'COM', 'Communicable disease information',
    'Communicable diseases, also known as infectious diseases are illnesses that result from the infection, presence, and growth of organisms and microorganisms such as bacteria, viruses, fungi, and parasites. They can be spread, directly or indirectly, from one person to another.',
-   6, FALSE);
+   6, FALSE, 1);
 
 --
 -- Insert data for table `value_set`

@@ -51,7 +51,8 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
                             valueSetCategory.getCodeName().getName(),
                             valueSetCategory.getDescription(),
                             valueSetCategory.isFederal(),
-                            valueSetCategory.getDisplayOrder()))
+                            valueSetCategory.getDisplayOrder(),
+                            valueSetCategory.getValueSetCategorySystem().getSystem()))
                     .collect(toList());
         } catch (Exception e) {
             logger.error(() -> "ValueSetCategories search failed: " + e.getMessage());
