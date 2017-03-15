@@ -8,8 +8,8 @@
     <version>0.2.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Value Set Service API</name>
-    <description>Value Set Service API</description>
+    <name>Value Set Service</name>
+    <description>Value Set Service</description>
     <url>${project.scm.url}</url>
 
     <organization>
@@ -32,13 +32,8 @@
         </license>
     </licenses>
 
-    <ciManagement>
-        <system>CI</system>
-        <url>http://BhitsBuild03/</url>
-    </ciManagement>
-
     <scm>
-        <url>https://github.com/bhits/vss-api</url>
+        <url>https://github.com/bhits/vss</url>
         <connection>scm:git:${project.scm.url}.git</connection>
         <developerConnection>scm:git:${project.scm.url}.git</developerConnection>
     </scm>
@@ -80,10 +75,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -139,17 +130,6 @@
             <version>${lombok.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>gov.samhsa.c2s</groupId>
-            <artifactId>oauth2</artifactId>
-            <version>${c2s-common-libraries.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <dependency>
             <groupId>gov.samhsa.c2s</groupId>
             <artifactId>logger-wrapper</artifactId>

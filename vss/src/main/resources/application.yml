@@ -3,7 +3,7 @@ server:
 logging:
   file: /java/C2S_LOGS/vss/vss.log
 info:
-  component: Value Set Service API
+  component: Value Set Service
 ribbon:
   ReadTimeout: 50000
 security:
