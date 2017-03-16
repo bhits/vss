@@ -1,7 +1,26 @@
-create table value_set_category_system (id bigint not null auto_increment, system varchar(255), primary key (id)) ENGINE=InnoDB;
-create table value_set_category_system_aud (id bigint not null, rev integer not null, revtype tinyint, system varchar(255), primary key (id, rev)) ENGINE=InnoDB;
-alter table value_set_category_system add constraint UKb3e9q77v81onsgnhq09g8g6h2 unique (system);
-alter table value_set_category add value_set_category_system_id bigint not null;
-alter table value_set_category_aud add value_set_category_system_id bigint;
-alter table value_set_category add constraint FK86aj26rwxaba94f2lvwxep8t3 foreign key (value_set_category_system_id) references value_set_category_system (id);
-alter table value_set_category_system_aud add constraint FKtms34e25c129q9mxcqjv5chqa foreign key (rev) references revinfo (id);
+CREATE TABLE value_set_category_system (
+  id     BIGINT NOT NULL AUTO_INCREMENT,
+  system VARCHAR(255),
+  PRIMARY KEY (id)
+)
+  ENGINE = InnoDB;
+
+CREATE TABLE value_set_category_system_aud (
+  id      BIGINT  NOT NULL,
+  rev     INTEGER NOT NULL,
+  revtype TINYINT,
+  system  VARCHAR(255),
+  PRIMARY KEY (id, rev)
+)
+  ENGINE = InnoDB;
+
+ALTER TABLE value_set_category_system
+  ADD CONSTRAINT UKb3e9q77v81onsgnhq09g8g6h2 UNIQUE (system);
+ALTER TABLE value_set_category
+  ADD value_set_category_system_id BIGINT NOT NULL;
+ALTER TABLE value_set_category_aud
+  ADD value_set_category_system_id BIGINT;
+ALTER TABLE value_set_category
+  ADD CONSTRAINT FK86aj26rwxaba94f2lvwxep8t3 FOREIGN KEY (value_set_category_system_id) REFERENCES value_set_category_system (id);
+ALTER TABLE value_set_category_system_aud
+  ADD CONSTRAINT FKtms34e25c129q9mxcqjv5chqa FOREIGN KEY (rev) REFERENCES revinfo (rev);
