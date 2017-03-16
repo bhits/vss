@@ -95,10 +95,9 @@ CREATE TABLE code_system_version (
 -- Table structure for table `revinfo`
 --
 CREATE TABLE revinfo (
-  id        INTEGER NOT NULL AUTO_INCREMENT,
-  timestamp BIGINT  NOT NULL,
-  username  VARCHAR(255),
-  PRIMARY KEY (id)
+  rev      INTEGER NOT NULL AUTO_INCREMENT,
+  revtstmp BIGINT,
+  PRIMARY KEY (rev)
 )
   ENGINE = InnoDB;
 
@@ -175,11 +174,11 @@ ALTER TABLE value_set
 ALTER TABLE value_set_category
   ADD CONSTRAINT UK_ei6kilxu5rvqu6h6tvsqgqtyh UNIQUE (code);
 ALTER TABLE code_system_aud
-  ADD CONSTRAINT FK6thihw90qgat59ct81t2ax5fg FOREIGN KEY (rev) REFERENCES revinfo (id);
+  ADD CONSTRAINT FK6thihw90qgat59ct81t2ax5fg FOREIGN KEY (rev) REFERENCES revinfo (rev);
 ALTER TABLE code_system_version_aud
-  ADD CONSTRAINT FKat2nhjkv7fafgx9wxk7vpxoim FOREIGN KEY (rev) REFERENCES revinfo (id);
+  ADD CONSTRAINT FKat2nhjkv7fafgx9wxk7vpxoim FOREIGN KEY (rev) REFERENCES revinfo (rev);
 ALTER TABLE coded_concept_aud
-  ADD CONSTRAINT FKrfq9igs19yod5kutwtt21vg6 FOREIGN KEY (rev) REFERENCES revinfo (id);
+  ADD CONSTRAINT FKrfq9igs19yod5kutwtt21vg6 FOREIGN KEY (rev) REFERENCES revinfo (rev);
 ALTER TABLE coded_concept_value_set
   ADD CONSTRAINT FK9jbtngauqki2ukginep3wc6bj FOREIGN KEY (value_set_id) REFERENCES value_set (id);
 ALTER TABLE coded_concept_value_set
@@ -189,8 +188,8 @@ ALTER TABLE coded_concept
 ALTER TABLE code_system_version
   ADD CONSTRAINT FKk0ho4t4jy73dxbuy1aw2du43c FOREIGN KEY (code_system_id) REFERENCES code_system (id);
 ALTER TABLE value_set_aud
-  ADD CONSTRAINT FKolu81t0x861e0j0a7y6gnc7n0 FOREIGN KEY (rev) REFERENCES revinfo (id);
+  ADD CONSTRAINT FKolu81t0x861e0j0a7y6gnc7n0 FOREIGN KEY (rev) REFERENCES revinfo (rev);
 ALTER TABLE value_set_category_aud
-  ADD CONSTRAINT FK7q2dn9tsbgfsv845gp22j8118 FOREIGN KEY (rev) REFERENCES revinfo (id);
+  ADD CONSTRAINT FK7q2dn9tsbgfsv845gp22j8118 FOREIGN KEY (rev) REFERENCES revinfo (rev);
 ALTER TABLE value_set
   ADD CONSTRAINT FKn2ydxxbemcyr9ecsfpq95rf13 FOREIGN KEY (value_set_category_id) REFERENCES value_set_category (id);
