@@ -56,8 +56,9 @@ public class ValueSetLookupRestControllerTest {
         final String description = "description";
         final boolean isFederal = true;
         final int displayOrder = 1;
+        final String system = "http://hl7.org/fhir/v3/ActCode";
         final ValueSetCategoryDto response = new ValueSetCategoryDto(code, displayName, description,
-                isFederal, displayOrder);
+                isFederal, displayOrder, system);
         valueSetCategoryDtoList.add(response);
         when(valueSetLookupService.getValueSetCategories()).thenReturn(valueSetCategoryDtoList);
 
@@ -68,7 +69,8 @@ public class ValueSetLookupRestControllerTest {
                 .andExpect(jsonPath("$[0].displayName", is(displayName)))
                 .andExpect(jsonPath("$[0].description", is(description)))
                 .andExpect(jsonPath("$[0].displayOrder", is(displayOrder)))
-                .andExpect(jsonPath("$[0].federal", is(isFederal)));
+                .andExpect(jsonPath("$[0].federal", is(isFederal)))
+                .andExpect(jsonPath("$[0].system", is(system)));
     }
 
     @Test
@@ -80,8 +82,9 @@ public class ValueSetLookupRestControllerTest {
         final String description = "description";
         final boolean isFederal = true;
         final int displayOrder = 1;
+        final String system = "http://hl7.org/fhir/v3/ActCode";
         final ValueSetCategoryDto response = new ValueSetCategoryDto(code, displayName, description,
-                isFederal, displayOrder);
+                isFederal, displayOrder, system);
         valueSetCategoryDtoList.add(response);
         when(valueSetLookupService.getValueSetCategories()).thenThrow(ValueSetCategoriesSearchFailedException.class);
 

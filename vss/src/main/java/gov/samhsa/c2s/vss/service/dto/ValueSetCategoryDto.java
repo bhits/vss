@@ -33,4 +33,9 @@ public class ValueSetCategoryDto {
      * The displayOrder.
      */
     private int displayOrder;
+
+    /**
+     * The system.
+     */
+    private String system;
 }

@@ -6,6 +6,7 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -29,4 +30,8 @@ public class ValueSetCategory {
 
     @Embedded
     private CodeName codeName;
+
+    @NotNull
+    @ManyToOne
+    private ValueSetCategorySystem valueSetCategorySystem;
 }
