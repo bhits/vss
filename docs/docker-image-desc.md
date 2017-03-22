@@ -16,6 +16,8 @@ For more information about this image, the source code, and its history, please 
 
 The Value Set Service (VSS) is responsible for Managing sensitive categories, code systems, value sets and coded concepts. The VSS also provides a RESTful service to map coded concepts to respective sensitive categories and provide the list of all sensitive categories available in the system.
 
+The value sets, downloaded from [VSAC](https://vsac.nlm.nih.gov/), are a set of concept codes mapped to various *sensitive categories* that are intended for use by organizations exchanging personally identifiable protected health information to perform data segmentation based on the patient’s privacy preferences in his or her consent.
+
 For more information and related downloads for Consent2Share, please visit [Consent2Share](https://bhits.github.io/consent2share/).
 
 # How to Use This Image
