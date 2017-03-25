@@ -28,7 +28,7 @@ To build the project, navigate to the folder that contains the [**parent** `pom.
 
 This project uses *[MySQL](https://www.mysql.com/)* for persistence and *[Flyway](https://flywaydb.org/)* for database migration. It requires having a database user account with Object and DDL Rights to a schema with the default name `vss`. Please see [Configure](#configure) section for details of configuring the data source. 
 
-A [SQL file](https://github.com/bhits/vss/blob/master/vss-db-sample/vss_db_sample.sql) is provided with this project to populate it with a small set of sample provider data.
+A [SQL file](https://github.com/bhits/vss/blob/master/vss-db-sample/vss_db_sample.sql) is provided with this project to populate the database with sample value set data.
 
 ### Commands
 
