@@ -23,3 +23,9 @@ spring:
     include: ssl-default
 server:
   context-path: /vss
+---
+spring:
+  profiles: docker
+  datasource:
+    url: jdbc:mysql://${C2S_DB_HOST:vss-db.c2s.com}:${C2S_DB_PORT:3306}/vss?autoReconnect=true
+
