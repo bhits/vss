@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface ValueSetRepository extends JpaRepository<ValueSet, Long> {
     List<ValueSet> findAllByCodedConceptsId(Long id);
+
 }
