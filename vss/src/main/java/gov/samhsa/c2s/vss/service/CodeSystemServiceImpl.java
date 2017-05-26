@@ -27,8 +27,7 @@ public class CodeSystemServiceImpl implements CodeSystemService {
     @Override
     public CodeSystemDto createCodeSystem(CodeSystemDto codeSystemDto) {
 
-        CodeSystem codeSystem = modelMapper.map(codeSystemDto, CodeSystem.class);
-        codeSystem = codeSystemRepository.save(codeSystem);
+        CodeSystem codeSystem = codeSystemRepository.save(modelMapper.map(codeSystemDto, CodeSystem.class));
         CodeSystemDto created = modelMapper.map(codeSystem, CodeSystemDto.class);
         log.debug("Code System Created : " + created);
         return created;

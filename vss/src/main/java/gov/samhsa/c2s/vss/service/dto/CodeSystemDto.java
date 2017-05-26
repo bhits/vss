@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CodeSystemDto extends AbstractNodeDto{
+public class CodeSystemDto extends CodeNameDto {
 
     
     private String displayName;
