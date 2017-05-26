@@ -51,13 +51,14 @@ public class ValueSetLookupRestControllerTest {
     public void testGetValueSetCategories() throws Exception {
         // Arrange
         List<ValueSetCategoryDto> valueSetCategoryDtoList = new ArrayList<>();
+        final Long id =1l;
         final String code = "code";
         final String displayName = "displayName";
         final String description = "description";
         final boolean isFederal = true;
         final int displayOrder = 1;
         final String system = "http://hl7.org/fhir/v3/ActCode";
-        final ValueSetCategoryDto response = new ValueSetCategoryDto(code, displayName, description,
+        final ValueSetCategoryDto response = new ValueSetCategoryDto(id, code, displayName, description,
                 isFederal, displayOrder, system);
         valueSetCategoryDtoList.add(response);
         when(valueSetLookupService.getValueSetCategories()).thenReturn(valueSetCategoryDtoList);
@@ -77,13 +78,14 @@ public class ValueSetLookupRestControllerTest {
     public void testGetValueSetCategories_Throws_ValueSetCategoriesSearchFailedException() throws Exception {
         // Arrange
         List<ValueSetCategoryDto> valueSetCategoryDtoList = new ArrayList<>();
+        final Long id = 1l;
         final String code = "code";
         final String displayName = "displayName";
         final String description = "description";
         final boolean isFederal = true;
         final int displayOrder = 1;
         final String system = "http://hl7.org/fhir/v3/ActCode";
-        final ValueSetCategoryDto response = new ValueSetCategoryDto(code, displayName, description,
+        final ValueSetCategoryDto response = new ValueSetCategoryDto(id, code, displayName, description,
                 isFederal, displayOrder, system);
         valueSetCategoryDtoList.add(response);
         when(valueSetLookupService.getValueSetCategories()).thenThrow(ValueSetCategoriesSearchFailedException.class);
