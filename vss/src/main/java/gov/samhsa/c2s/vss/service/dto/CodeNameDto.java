@@ -9,22 +9,14 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AbstractNodeDto {
+public class CodeNameDto {
 	
 	protected Long id;
 	@NotEmpty
 	protected String code;
     
 	protected String name;
-	
-	protected String userName;
 
-	public  boolean isError;
-	protected String errorMessage;
-	protected String successMessage;
-	
-	protected boolean deletable = true;
-	
 
 	@Override
 	public String toString() {
