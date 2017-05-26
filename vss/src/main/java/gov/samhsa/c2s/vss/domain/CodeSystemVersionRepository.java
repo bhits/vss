@@ -8,4 +8,5 @@ import java.util.Optional;
 @Repository
 public interface CodeSystemVersionRepository extends JpaRepository<CodeSystemVersion, Long> {
     Optional<CodeSystemVersion> findTopByCodeSystemCodeSystemOidOrderByVersionOrderDesc(String codeSystemOid);
+    Optional<CodeSystemVersion> findOneById(Long id);
 }
