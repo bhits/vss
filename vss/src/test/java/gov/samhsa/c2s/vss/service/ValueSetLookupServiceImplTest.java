@@ -78,7 +78,8 @@ public class ValueSetLookupServiceImplTest {
         when(valueSetCategoryRepository.findAll()).thenReturn(valueSetCategoryListMock);
 
         List<ValueSetCategoryDto> valueSetCategoryDtoList = valueSetCategoryListMock.stream()
-                .map(valueSetCategory -> new ValueSetCategoryDto(valueSetCategory.getCodeName().getCode(),
+                .map(valueSetCategory -> new ValueSetCategoryDto(
+                        valueSetCategory.getId(), valueSetCategory.getCodeName().getCode(),
                         valueSetCategory.getCodeName().getName(),
                         valueSetCategory.getDescription(),
                         valueSetCategory.isFederal(),
@@ -93,13 +94,13 @@ public class ValueSetLookupServiceImplTest {
         assertEquals(valueSetCategoryDtoList, valueSetCategoryDtos);
         assertEquals(2, valueSetCategoryDtos.size());
         assertEquals(vscMockCode, valueSetCategoryDtos.get(0).getCode());
-        assertEquals(vscMockName, valueSetCategoryDtos.get(0).getDisplayName());
+        assertEquals(vscMockName, valueSetCategoryDtos.get(0).getName());
         assertEquals(vscMockDescription, valueSetCategoryDtos.get(0)
                 .getDescription());
         assertEquals(vscMockIsFederal, valueSetCategoryDtos.get(0).isFederal());
         assertEquals(vscMockDisplayOrder, valueSetCategoryDtos.get(0).getDisplayOrder());
         assertEquals(vscMock2Code, valueSetCategoryDtos.get(1).getCode());
-        assertEquals(vscMock2Name, valueSetCategoryDtos.get(1).getDisplayName());
+        assertEquals(vscMock2Name, valueSetCategoryDtos.get(1).getName());
         assertEquals(vscMock2Description, valueSetCategoryDtos.get(1)
                 .getDescription());
         assertEquals(vscMock2DisplayOrder, valueSetCategoryDtos.get(1).getDisplayOrder());

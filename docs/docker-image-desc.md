@@ -1,6 +1,6 @@
 # Short Description
 
-The Value Set Service (VSS) is responsible for Managing sensitive categories, code systems, value sets and coded concepts. 
+The Value Set Service (VSS) is used as Value Set Management System in Consent2Share. 
 
 # Full Description
 

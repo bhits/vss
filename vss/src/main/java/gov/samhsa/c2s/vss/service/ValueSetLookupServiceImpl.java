@@ -47,7 +47,9 @@ public class ValueSetLookupServiceImpl implements ValueSetLookupService {
         List<ValueSetCategoryDto> valueSetCategoryDtos;
         try {
             valueSetCategoryDtos = valueSetCategoryRepository.findAll().stream()
-                    .map(valueSetCategory -> new ValueSetCategoryDto(valueSetCategory.getCodeName().getCode(),
+                    .map(valueSetCategory -> new ValueSetCategoryDto(valueSetCategory.getId(), valueSetCategory
+                            .getCodeName()
+                            .getCode(),
                             valueSetCategory.getCodeName().getName(),
                             valueSetCategory.getDescription(),
                             valueSetCategory.isFederal(),

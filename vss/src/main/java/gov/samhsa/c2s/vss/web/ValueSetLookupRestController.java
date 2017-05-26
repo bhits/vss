@@ -1,10 +1,12 @@
 package gov.samhsa.c2s.vss.web;
 
+import gov.samhsa.c2s.vss.domain.ValueSetCategory;
 import gov.samhsa.c2s.vss.service.ValueSetLookupService;
 import gov.samhsa.c2s.vss.service.dto.CodedConceptAndCodeSystemOidDto;
 import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryDto;
 import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryMapDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

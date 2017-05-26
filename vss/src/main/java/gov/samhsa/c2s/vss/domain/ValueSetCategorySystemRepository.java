@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ValueSetCategoryRepository extends JpaRepository<ValueSetCategory, Long> {
+public interface ValueSetCategorySystemRepository extends JpaRepository<ValueSetCategorySystem, Long> {
 
-    Optional<ValueSetCategory> findByCodeName_Code(String code);
+    Optional<ValueSetCategorySystem> findBySystem(String system);
 
 }

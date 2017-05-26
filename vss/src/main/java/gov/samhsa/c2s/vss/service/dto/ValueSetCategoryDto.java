@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ValueSetCategoryDto {
 
+    private Long id;
+
     /**
      * The code.
      */
@@ -17,7 +19,7 @@ public class ValueSetCategoryDto {
     /**
      * The display name.
      */
-    private String displayName;
+    private String name;
 
     /**
      * The description.
