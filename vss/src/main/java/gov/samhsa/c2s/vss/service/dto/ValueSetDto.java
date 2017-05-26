@@ -14,31 +14,19 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ValueSetDto extends AbstractNodeDto {
+public class ValueSetDto extends CodeNameDto {
 
 	/** The description. */
 	private String description;
-	
-	/** The value set category id. */
-	private Long valueSetCategoryId;
-	
-	/** The value set cat name. */
-	private String valueSetCatName;
 	
 	private Map<Long,String> valueSetCategoryMap =  new HashMap<Long, String>();
 
 	
 	/** The value set cat code. */
 	private String valueSetCatCode;
-	/** The rows updated. */
-	private int rowsUpdated;
-	
-	/** The error row. */
-	private int errorRow;
-
 
 	/* (non-Javadoc)
-	 * @see gov.samhsa.consent2share.service.dto.AbstractNodeDto#toString()
+	 * @see gov.samhsa.consent2share.service.dto.CodeNameDto#toString()
 	 */
 	@Override
 	public String toString() {
