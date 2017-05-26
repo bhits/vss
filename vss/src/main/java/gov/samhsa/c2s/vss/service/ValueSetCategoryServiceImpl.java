@@ -4,6 +4,7 @@ import gov.samhsa.c2s.vss.domain.ValueSetCategory;
 import gov.samhsa.c2s.vss.domain.ValueSetCategoryRepository;
 import gov.samhsa.c2s.vss.service.dto.ValueSetCategoryDto;
 import gov.samhsa.c2s.vss.service.exception.ValueSetCategoryNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ValueSetCategoryServiceImpl implements ValueSetCategoryService{
 
     private final ValueSetCategoryRepository valueSetCategoryRepository;
@@ -22,12 +24,16 @@ public class ValueSetCategoryServiceImpl implements ValueSetCategoryService{
     }
 
     @Override
-    public ValueSetCategoryDto create(ValueSetCategoryDto created) {
-        return null;
+    public ValueSetCategoryDto createValueSetCategory(ValueSetCategoryDto valueSetCategoryDto) {
+        ValueSetCategory valueSetCategory = valueSetCategoryRepository.save(modelMapper.map(valueSetCategoryDto,
+                ValueSetCategory.class));
+        ValueSetCategoryDto created = modelMapper.map(valueSetCategory, ValueSetCategoryDto.class);
+        log.debug("ValueSet Category Created " + created);
+        return created;
     }
 
     @Override
-    public ValueSetCategoryDto delete(Long ValueSetCategoryId) throws ValueSetCategoryNotFoundException {
+    public ValueSetCategoryDto deleteValueSetCategory(Long ValueSetCategoryId) throws ValueSetCategoryNotFoundException {
         return null;
     }
 
@@ -40,6 +46,7 @@ public class ValueSetCategoryServiceImpl implements ValueSetCategoryService{
     public ValueSetCategoryDto findById(Long id) {
         return null;
     }
+
 
     @Override
     public ValueSetCategoryDto findByCode(String code) throws ValueSetCategoryNotFoundException{
@@ -54,7 +61,8 @@ public class ValueSetCategoryServiceImpl implements ValueSetCategoryService{
     }
 
     @Override
-    public ValueSetCategoryDto update(ValueSetCategoryDto updated) throws ValueSetCategoryNotFoundException {
+    public ValueSetCategoryDto updateValueSetCategory(ValueSetCategoryDto updated) throws ValueSetCategoryNotFoundException {
         return null;
     }
+
 }

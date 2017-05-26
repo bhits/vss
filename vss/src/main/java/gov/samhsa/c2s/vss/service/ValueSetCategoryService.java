@@ -11,10 +11,10 @@ import java.util.List;
 public interface ValueSetCategoryService {
     /**
      * Creates a new ValueSetCategory.
-     * @param created   The information of the created ValueSetCategory.
+     * @param valueSetCategoryDto   The information of the created ValueSetCategory.
      * @return  The created ValueSetCategory.
      */
-    public ValueSetCategoryDto create(ValueSetCategoryDto created);
+    public ValueSetCategoryDto createValueSetCategory(ValueSetCategoryDto valueSetCategoryDto);
 
     /**
      * Deletes a ValueSetCategory.
@@ -22,7 +22,7 @@ public interface ValueSetCategoryService {
      * @return  The deleted ValueSetCategory.
      * @throws ValueSetCategoryNotFoundException  if no ValueSetCategory is found with the given id.
      */
-    public ValueSetCategoryDto delete(Long ValueSetCategoryId) throws ValueSetCategoryNotFoundException;
+    public ValueSetCategoryDto deleteValueSetCategory(Long ValueSetCategoryId) throws ValueSetCategoryNotFoundException;
 
     /**
      * Finds all ValueSetCategories.
@@ -53,7 +53,7 @@ public interface ValueSetCategoryService {
      * @return  The updated ValueSetCategory.
      * @throws ValueSetCategoryNotFoundException  if no ValueSetCategory is found with given id.
      */
-    public ValueSetCategoryDto update(ValueSetCategoryDto updated) throws ValueSetCategoryNotFoundException;
+    public ValueSetCategoryDto updateValueSetCategory(ValueSetCategoryDto updated) throws ValueSetCategoryNotFoundException;
 
 
 }
