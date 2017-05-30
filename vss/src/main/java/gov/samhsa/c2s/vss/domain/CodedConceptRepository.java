@@ -6,5 +6,7 @@ import java.util.Optional;
 
 public interface CodedConceptRepository extends JpaRepository<CodedConcept, Long> {
     Optional<CodedConcept> findByCodeSystemVersionIdAndCodeNameCode(Long id, String code);
-    Optional<CodedConcept> findOneById(String id);
+    Optional<CodedConcept> findOneById(Long id);
+    Optional<CodedConcept> findByCodeSystemVersion_IdAndCodeName_Code(Long codeSVId, String code);
+
 }

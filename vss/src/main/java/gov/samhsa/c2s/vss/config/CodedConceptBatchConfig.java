@@ -2,12 +2,10 @@ package gov.samhsa.c2s.vss.config;
 
 import gov.samhsa.c2s.vss.domain.CodedConcept;
 import gov.samhsa.c2s.vss.domain.CodedConceptRepository;
-import gov.samhsa.c2s.vss.domain.ValueSet;
-import gov.samhsa.c2s.vss.domain.ValueSetRepository;
+import gov.samhsa.c2s.vss.service.batch.CodedConceptDataFileReader;
 import gov.samhsa.c2s.vss.service.batch.CodedConceptItemProcessor;
 import gov.samhsa.c2s.vss.service.batch.DuplicateRecordSkipListener;
-import gov.samhsa.c2s.vss.service.batch.DataFileReader;
-import gov.samhsa.c2s.vss.service.dto.ValueSetUploadDto;
+import gov.samhsa.c2s.vss.service.dto.CodedConceptUploadDto;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -28,7 +26,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.InputStreamResource;
 
-import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
 
 @Configuration
@@ -44,13 +41,15 @@ public class CodedConceptBatchConfig {
 
 
     @Autowired
-    public CodedConceptBatchConfig(JobBuilderFactory jobs, StepBuilderFactory steps, CodedConceptRepository codedConceptRepository, CodedConceptItemProcessor
+    public CodedConceptBatchConfig(JobBuilderFactory jobs, StepBuilderFactory steps, CodedConceptRepository
+            codedConceptRepository, CodedConceptItemProcessor
 
             codedConceptItemProcessor) {
         this.jobs = jobs;
         this.steps = steps;
         this.codedConceptRepository = codedConceptRepository;
-        this.codedConceptItemProcessor = codedConceptItemProcessor;}
+        this.codedConceptItemProcessor = codedConceptItemProcessor;
+    }
 
     // tag::jobstep[]
     @Bean(name = "codedConceptJob")
@@ -66,9 +65,9 @@ public class CodedConceptBatchConfig {
     @Bean
     public Step CodedConceptStep() {
 
-        return steps.get("valueSetStep")
-                .<ValueSetUploadDto, CodedConcept>chunk(10)
-                .reader(csvValueSetReader())
+        return steps.get("CodedConceptStep")
+                .<CodedConceptUploadDto, CodedConcept>chunk(10)
+                .reader(csvCodedConceptReader())
                 .processor(codedConceptItemProcessor)
                 .writer(codedConceptWriter())
                 .faultTolerant()
@@ -82,42 +81,43 @@ public class CodedConceptBatchConfig {
 
     @Bean
     @StepScope
-    FlatFileItemReader<ValueSetUploadDto> csvValueSetReader() {
+    FlatFileItemReader<CodedConceptUploadDto> csvCodedConceptReader() {
 
         //To read lines from an input file
-        FlatFileItemReader<ValueSetUploadDto> csvFilereader = new DataFileReader();
+        FlatFileItemReader<CodedConceptUploadDto> csvFilereader = new CodedConceptDataFileReader();
 
         csvFilereader.setResource(new InputStreamResource(new ByteArrayInputStream(new byte[0])));
         // skip over headers
         csvFilereader.setLinesToSkip(1);  // header line
         // To transform lines into objects by using a LineMapper
         // Maps a line in the file to an object
-        csvFilereader.setLineMapper(valueSetUploadDtoLineMapper());
+        csvFilereader.setLineMapper(codedConeptUploadDtoLineMapper());
         return csvFilereader;
 
     }
 
 
-    private LineMapper<ValueSetUploadDto> valueSetUploadDtoLineMapper() {
-        DefaultLineMapper<ValueSetUploadDto> valueSetLineMapper = new DefaultLineMapper<>();
+    private LineMapper<CodedConceptUploadDto> codedConeptUploadDtoLineMapper() {
+        DefaultLineMapper<CodedConceptUploadDto> codedConceptLineMapper = new DefaultLineMapper<>();
         // TODO:: need to generalize
-        valueSetLineMapper.setLineTokenizer(createValueSetLineTokenizer());
-        valueSetLineMapper.setFieldSetMapper(valueSetFieldSetMapper());
-        return valueSetLineMapper;
+        codedConceptLineMapper.setLineTokenizer(createcodedConceptLineTokenizer());
+        codedConceptLineMapper.setFieldSetMapper(codedConceptFieldSetMapper());
+        return codedConceptLineMapper;
     }
 
 
-    private LineTokenizer createValueSetLineTokenizer() {
-        DelimitedLineTokenizer valueSetLineTokenizer = new DelimitedLineTokenizer();
-        valueSetLineTokenizer.setDelimiter(",");
-        valueSetLineTokenizer.setNames(new String[]{"code", "name", "description", "valueSetCatId"});
-        return valueSetLineTokenizer;
+    private LineTokenizer createcodedConceptLineTokenizer() {
+        DelimitedLineTokenizer codedConceptLineTokenizer = new DelimitedLineTokenizer();
+        codedConceptLineTokenizer.setDelimiter(",");
+        codedConceptLineTokenizer.setNames(new String[]{"code", "name", "description","codeSystemId",
+                "codeSystemVersionId" ,"uploadValueSets"});
+        return codedConceptLineTokenizer;
     }
 
-    private FieldSetMapper<ValueSetUploadDto> valueSetFieldSetMapper() {
-        BeanWrapperFieldSetMapper<ValueSetUploadDto> valueSetFieldMapper = new BeanWrapperFieldSetMapper<>();
-        valueSetFieldMapper.setTargetType(ValueSetUploadDto.class);
-        return valueSetFieldMapper;
+    private FieldSetMapper<CodedConceptUploadDto> codedConceptFieldSetMapper() {
+        BeanWrapperFieldSetMapper<CodedConceptUploadDto> codedConceptFieldMapper = new BeanWrapperFieldSetMapper<>();
+        codedConceptFieldMapper.setTargetType(CodedConceptUploadDto.class);
+        return codedConceptFieldMapper;
     }
 
     @Bean

@@ -12,26 +12,10 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CodedConceptDto extends CodeNameDto {
-
-	private Map<Long, String> valueSetMap = new HashMap<Long, String>();
-
-	private Long valueSetId;
-	private String valueSetName;
-
+	//batch upload parameters
 	private Long codeSystemId;
-	private String codeSystemName;
-
 	private Long codeSystemVersionId;
-	private String codeSystemVersionName;
-	
 	private List<Long> valueSetIds;
-	
-
-	
-	private List<Integer> listOfDuplicatesCodes;
-	private int conceptCodesInserted;
-
 	private String description;
-
 
 }
