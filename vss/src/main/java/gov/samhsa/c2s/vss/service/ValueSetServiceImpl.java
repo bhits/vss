@@ -3,6 +3,7 @@ package gov.samhsa.c2s.vss.service;
 import gov.samhsa.c2s.vss.domain.ValueSet;
 import gov.samhsa.c2s.vss.domain.ValueSetRepository;
 import gov.samhsa.c2s.vss.service.dto.ValueSetDto;
+import gov.samhsa.c2s.vss.service.dto.ValueSetUploadDto;
 import gov.samhsa.c2s.vss.service.exception.ValueSetCategoryNotFoundException;
 import gov.samhsa.c2s.vss.service.exception.ValueSetNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,12 @@ public class ValueSetServiceImpl implements ValueSetService {
         ValueSetDto created = modelMapper.map(valueSet, ValueSetDto.class);
         log.debug("ValueSet Created " + created);
         return created;
+    }
+
+    @Override
+    public ValueSet getValueSet(ValueSetUploadDto valueSetUploadDto) {
+        ValueSetDto valueSetDto = modelMapper.map(valueSetUploadDto, ValueSetDto.class);
+        return modelMapper.map(valueSetDto, ValueSet.class);
     }
 
     @Override
@@ -80,6 +87,4 @@ public class ValueSetServiceImpl implements ValueSetService {
     public List<ValueSetDto> findAllWithoutDeletable() {
         return null;
     }
-
-
 }

@@ -53,7 +53,7 @@ public class ValueSetLookupRestControllerTest {
         List<ValueSetCategoryDto> valueSetCategoryDtoList = new ArrayList<>();
         final Long id =1l;
         final String code = "code";
-        final String displayName = "displayName";
+        final String displayName = "name";
         final String description = "description";
         final boolean isFederal = true;
         final int displayOrder = 1;
@@ -67,7 +67,7 @@ public class ValueSetLookupRestControllerTest {
         mvc.perform(get("/valueSetCategories"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].code", is(code)))
-                .andExpect(jsonPath("$[0].displayName", is(displayName)))
+                .andExpect(jsonPath("$[0].name", is(displayName)))
                 .andExpect(jsonPath("$[0].description", is(description)))
                 .andExpect(jsonPath("$[0].displayOrder", is(displayOrder)))
                 .andExpect(jsonPath("$[0].federal", is(isFederal)))

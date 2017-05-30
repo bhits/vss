@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface ValueSetCategoryRepository extends JpaRepository<ValueSetCategory, Long> {
 
     Optional<ValueSetCategory> findByCodeName_Code(String code);
+    Optional<ValueSetCategory> findById(Long id);
 
 }

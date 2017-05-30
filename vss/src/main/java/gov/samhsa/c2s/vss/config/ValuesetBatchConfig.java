@@ -4,7 +4,7 @@ import gov.samhsa.c2s.vss.domain.ValueSet;
 import gov.samhsa.c2s.vss.domain.ValueSetRepository;
 import gov.samhsa.c2s.vss.service.batch.DuplicateRecordSkipListener;
 import gov.samhsa.c2s.vss.service.batch.ValueSetItemProcessor;
-import gov.samhsa.c2s.vss.service.batch.DataFileReader;
+import gov.samhsa.c2s.vss.service.batch.ValueSetDataFileReader;
 import gov.samhsa.c2s.vss.service.dto.ValueSetUploadDto;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -82,13 +82,12 @@ public class ValuesetBatchConfig {
     FlatFileItemReader<ValueSetUploadDto> csvValueSetReader() {
 
         //To read lines from an input file
-        FlatFileItemReader<ValueSetUploadDto> csvFilereader = new DataFileReader();
+        FlatFileItemReader<ValueSetUploadDto> csvFilereader = new ValueSetDataFileReader();
 
         csvFilereader.setResource(new InputStreamResource(new ByteArrayInputStream(new byte[0])));
         // skip over headers
-        csvFilereader.setLinesToSkip(1);  // header line
-        // To transform lines into objects by using a LineMapper
-        // Maps a line in the file to an object
+        csvFilereader.setLinesToSkip(1);
+
         csvFilereader.setLineMapper(valueSetUploadDtoLineMapper());
         return csvFilereader;
 
@@ -97,7 +96,6 @@ public class ValuesetBatchConfig {
 
     private LineMapper<ValueSetUploadDto> valueSetUploadDtoLineMapper() {
         DefaultLineMapper<ValueSetUploadDto> valueSetLineMapper = new DefaultLineMapper<>();
-        // TODO:: need to generalize
         valueSetLineMapper.setLineTokenizer(createValueSetLineTokenizer());
         valueSetLineMapper.setFieldSetMapper(valueSetFieldSetMapper());
         return valueSetLineMapper;
@@ -107,7 +105,7 @@ public class ValuesetBatchConfig {
     private LineTokenizer createValueSetLineTokenizer() {
         DelimitedLineTokenizer valueSetLineTokenizer = new DelimitedLineTokenizer();
         valueSetLineTokenizer.setDelimiter(",");
-        valueSetLineTokenizer.setNames(new String[]{"code", "name", "description", "valueSetCatId"});
+        valueSetLineTokenizer.setNames(new String[]{"code", "name", "description", "valueSetCatCode"});
         return valueSetLineTokenizer;
     }
 
