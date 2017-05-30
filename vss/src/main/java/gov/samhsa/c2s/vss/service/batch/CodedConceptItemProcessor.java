@@ -1,27 +1,25 @@
 package gov.samhsa.c2s.vss.service.batch;
 
-import gov.samhsa.c2s.vss.domain.CodeSystemVersionRepository;
 import gov.samhsa.c2s.vss.domain.CodedConcept;
-import gov.samhsa.c2s.vss.domain.ValueSet;
-import gov.samhsa.c2s.vss.domain.ValueSetCategoryRepository;
-import gov.samhsa.c2s.vss.domain.valueobject.CodeName;
-import gov.samhsa.c2s.vss.service.dto.ValueSetUploadDto;
+import gov.samhsa.c2s.vss.service.CodedConceptService;
+import gov.samhsa.c2s.vss.service.dto.CodedConceptUploadDto;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CodedConceptItemProcessor implements ItemProcessor<ValueSetUploadDto, CodedConcept>{
-    @Autowired
-    private CodeSystemVersionRepository codeSystemVersionRepository;
+public class CodedConceptItemProcessor implements ItemProcessor<CodedConceptUploadDto, CodedConcept> {
+
+    private final CodedConceptService codedConceptService;
+
+    public CodedConceptItemProcessor(CodedConceptService codedConceptService) {
+        this.codedConceptService = codedConceptService;
+    }
 
     @Override
-    public CodedConcept process(ValueSetUploadDto valueSetUploadDto) throws Exception {
-        CodedConcept codedConcept = new CodedConcept();
-        codedConcept.setCodeName(new CodeName(valueSetUploadDto.getCode(), valueSetUploadDto.getName()));
-        codedConcept.setDescription(valueSetUploadDto.getDescription());
-/*        codedConcept.setCodeSystemVersion(codeSystemVersionRepository.findByCodeName_Code(valueSetUploadDto
-                .getValueSetCatCode()).get());*/
-        return codedConcept;
+    public CodedConcept process(CodedConceptUploadDto codedConceptUploadDto) throws Exception {
+        return codedConceptService.getCodedConcept(codedConceptUploadDto);
+
     }
+
+
 }

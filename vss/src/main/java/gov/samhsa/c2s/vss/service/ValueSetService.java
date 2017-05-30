@@ -1,6 +1,8 @@
 package gov.samhsa.c2s.vss.service;
 
+import gov.samhsa.c2s.vss.domain.ValueSet;
 import gov.samhsa.c2s.vss.service.dto.ValueSetDto;
+import gov.samhsa.c2s.vss.service.dto.ValueSetUploadDto;
 import gov.samhsa.c2s.vss.service.exception.ValueSetNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +26,9 @@ public interface ValueSetService {
      */
     public ValueSetDto createValueSet(ValueSetDto valueSetDto)
             throws ValueSetNotFoundException;
+
+
+    public ValueSet getValueSet(ValueSetUploadDto valueSetUploadDto);
 
     /**
      * Deletes a ValueSet.
