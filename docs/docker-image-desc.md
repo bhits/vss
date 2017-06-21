@@ -6,7 +6,8 @@ The Value Set Service (VSS) is used as Value Set Management System in Consent2Sh
 
 # Supported Source Code Tags and Current `Dockerfile` Link
 
-[`0.3.0 (latest)`](https://github.com/bhits-dev/vss/releases/tag/0.3.0), [`0.2.0`](https://github.com/bhits-dev/vss/releases/tag/0.2.0)
+[`0.4.0 (latest)`](https://github.com/bhits-dev/vss/releases/tag/0.4.0), [`0.3.0`](https://github
+.com/bhits-dev/vss/releases/tag/0.3.0), [`0.2.0`](https://github.com/bhits-dev/vss/releases/tag/0.2.0)
 
 
 [`Current Dockerfile`](https://github.com/bhits-dev/vss/blob/master/vss/src/main/docker/Dockerfile)
@@ -19,7 +20,7 @@ The Value Set Service (VSS) is responsible for Managing sensitive categories, co
 
 The value sets, downloaded from [VSAC](https://vsac.nlm.nih.gov/), are a set of concept codes mapped to various *sensitive categories* that are intended for use by organizations exchanging personally identifiable protected health information to perform data segmentation based on the patient’s privacy preferences in his or her consent.
 
-For more information and related downloads for Consent2Share, please visit [Consent2Share](https://bhits.github.io/consent2share/).
+For more information and related downloads for Consent2Share, please visit [Consent2Share](https://bhits-dev.github.io/consent2share/).
 
 # How to Use This Image
 
