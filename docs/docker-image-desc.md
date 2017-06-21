@@ -6,8 +6,7 @@ The Value Set Service (VSS) is used as Value Set Management System in Consent2Sh
 
 # Supported Source Code Tags and Current `Dockerfile` Link
 
-[`0.4.0 (latest)`](https://github.com/bhits-dev/vss/releases/tag/0.4.0), [`0.3.0`](https://github
-.com/bhits-dev/vss/releases/tag/0.3.0), [`0.2.0`](https://github.com/bhits-dev/vss/releases/tag/0.2.0)
+[`0.4.0 (latest)`](https://github.com/bhits-dev/vss/releases/tag/0.4.0), [`0.3.0`](https://github.com/bhits-dev/vss/releases/tag/0.2.0), [`0.2.0`](https://github.com/bhits-dev/vss/releases/tag/0.2.0)
 
 
 [`Current Dockerfile`](https://github.com/bhits-dev/vss/blob/master/vss/src/main/docker/Dockerfile)
