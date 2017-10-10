@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -66,15 +67,20 @@ public class CodedConceptServiceImpl implements CodedConceptService{
 
         // STEP:2 :- Get ValueSet Objects from DB
          List<ValueSet> valueSets = codedConceptDto.getValueSetIds().stream().map(toValueSet()).collect(Collectors.toList());
-/*        ValueSet valueSet = valueSetRepository.findById(Long.parseLong(codedConceptDto.getValueSetId())).orElseThrow
-                (ValueSetNotFoundException::new);*/
+
         CodedConcept codedConcept = null;
 
+        // STEP:3 :- Check if coded concept is already available
         if (optCodedConcept.isPresent()) {
             codedConcept = optCodedConcept.get();
-            // check if association between code and valueset exists
-
-
+            // check if association between code and value set exists
+            List<Long> newIds = valueSets.stream().map(v -> v.getId()).collect(Collectors.toList());
+            boolean isAvailable =  codedConcept.getValueSets().stream().anyMatch( p -> newIds.remove(p.getId()));
+            // if mapping available, nothing to be done
+            if(! isAvailable){
+                // add to the existing value sets
+                codedConcept.setValueSets(Stream.concat(codedConcept.getValueSets().stream(), valueSets.stream()).collect(Collectors.toList()));
+            }
         } else {
             // New Concept Code
             codedConcept = modelMapper.map(codedConceptDto, CodedConcept.class);
