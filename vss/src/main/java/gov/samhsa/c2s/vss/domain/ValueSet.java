@@ -28,4 +28,8 @@ public class ValueSet {
 
     @Embedded
     private CodeName codeName;
+
+    private String vsacValueSetName;
+
+    private String vsacOid;
 }
