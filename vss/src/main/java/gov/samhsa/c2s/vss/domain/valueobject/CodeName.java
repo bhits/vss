@@ -22,7 +22,7 @@ public class CodeName {
     @NotNull
     private String code;
 
-    @Column
+    @Column(columnDefinition = "mediumtext")
     @NotNull
     private String name;
 }

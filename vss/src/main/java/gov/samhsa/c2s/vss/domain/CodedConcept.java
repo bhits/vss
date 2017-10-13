@@ -19,6 +19,7 @@ public class CodedConcept {
     @GeneratedValue
     private Long id;
 
+    @Column(columnDefinition = "mediumtext")
     private String description;
 
     @ManyToOne
